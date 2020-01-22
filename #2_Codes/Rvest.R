@@ -15,15 +15,15 @@ res <- read_html(URL) %>%
 # Show the results of the web scraping
 View(res[[1]])
 
-# Create a session and navigate from an URL to another
+# Create a session and navigate from a URL to another
 rvest_session <- html_session(URL) %>%
   jump_to("Great_Houses") %>% 
   session_history()
 
-# Old url
+# Old URM, so the URL of "House_stark"
 rvest_session$back
 
-# Actual url
+# Actual url, so the Url of great "Great_Houses"
 rvest_session$url
 
 # Get the status of the page that we check 

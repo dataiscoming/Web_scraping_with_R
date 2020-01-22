@@ -9,6 +9,7 @@ URL_1 = "https://awoiaf.westeros.org/index.php/House_Stark"
 XPATH_1 = "/html/body/div[4]/div/div[1]/div/div[3]/div[4]/div/table[2]/tbody/tr/td/table/tbody/tr[3]/td/table"
 URL_2 = "https://www.google.com/search?q=ned+stark&source=lnms&tbm=isch&sa=X&ved=2ahUKEwig8vLF8fjmAhXbAWMBHbbzCVIQ_AUoAXoECBIQAw&biw=1920&bih=966"
 
+################################
 # Connect to a selenium server thanks to the rsDriver function
 RD <-RSelenium::rsDriver(port=4445L,
                          browser = "firefox",
@@ -27,11 +28,11 @@ remDr <- remoteDriver(
 )
 remDr$open()
 remDr$getStatus()
+################################
 
-# Docker 
-# let's see
+# Case 1: scrap a table
 
-# Go to URL
+# Go to the URL
 remDr$navigate(URL_1)
 
 # Visualize that URL in R
@@ -58,7 +59,11 @@ for(i in seq(from=2, to=17, by=2)){
   df <- rbind(df,t)
 }
 
-# Second exmaple with Rselenium
+##################################
+
+# Case 2 : Scraping images links from google image search
+
+# Go to the URL
 remDr$navigate(URL_2)
 remDr$screenshot(display = TRUE)
 
@@ -76,6 +81,8 @@ webElem$highlightElement()
 # Get the attribute src from every images in order to download the images
 res <- sapply(webElem, function(x){x$getElementAttribute("src")})
 
+################################
+
 # Terminate the selenium server and free the port
 RD[["server"]]$stop()
 remDr$closeServer()
@@ -90,3 +97,4 @@ remDr$closeServer()
 # http://thatdatatho.com/2019/01/22/tutorial-web-scraping-rselenium/
 # https://stackoverflow.com/questions/38049819/scraping-table-with-r-using-rselenium
 # https://github.com/mozilla/geckodriver/releases/tag/v0.26.0
+# https://selenium.dev/downloads/
